@@ -1,0 +1,38 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tinder_app
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tinder_db
+      - SPRING_DATASOURCE_USERNAME=ali
+      - SPRING_DATASOURCE_PASSWORD=alimurad05
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - tinder-network
+  db:
+    image: postgres
+    container_name: tinder_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=ali
+      - POSTGRES_PASSWORD=alimurad05
+      - POSTGRES_DB=tinder_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - tinder-network
+
+networks:
+  tinder-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
