@@ -1,12 +1,14 @@
 package az.turing.tinderapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import org.hibernate.validator.constraints.Length;
+import org.springframework.context.annotation.Bean;
 
 
 @Entity
@@ -19,14 +21,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Length(min=1,max=30)
-    @Column(name="username",nullable = false)
+    @NotNull
     private String username;
-
-    @Length(min=6,max=30)
-    @Column(name="password",nullable = false)
+    @NotNull
     private String password;
-    @Column(name="email")
+    @NotNull
+    @Email
     private String email;
 }

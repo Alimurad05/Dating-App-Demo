@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/likes")
 @RequiredArgsConstructor
@@ -18,8 +18,7 @@ public class LikeController {
 
     @GetMapping("/{likeId}")
     public ResponseEntity<LikeDto> getLikeById(@PathVariable Long likeId) {
-        LikeDto likeDto = likeService.getLikeById(likeId);
-        return ResponseEntity.ok(likeDto);
+        return ResponseEntity.ok(likeService.getLikeById(likeId));
     }
     @PostMapping
     public ResponseEntity<LikeDto> createLike(@RequestBody LikeDto likedto){
@@ -28,16 +27,17 @@ public class LikeController {
     @DeleteMapping("/{likeId}")
     public ResponseEntity<Void> deleteLike(@PathVariable Long likeId) {
         likeService.deleteLikeById(likeId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
-    @PutMapping(value = "/{likeId}")
-    public ResponseEntity<LikeDto> updateLike(@RequestBody LikeDto likedto){
-        return ResponseEntity.ok(likeService.saveLike(likedto));
-    }
+
     @GetMapping
     public ResponseEntity<List<LikeDto>> getAllLikes() {
-        List<LikeDto> likeDtos = likeService.getAllLikes();
-        return ResponseEntity.ok(likeDtos);
+        return ResponseEntity.ok(likeService.getAllLikes());
     }
+    @PutMapping("/{likeId}")
+    public ResponseEntity<LikeDto> updateLike(@PathVariable Long likeId, @RequestBody LikeDto likedto) {
+        return ResponseEntity.ok(likeService.updateLike(likeId,likedto));
+    }
+
 
 }

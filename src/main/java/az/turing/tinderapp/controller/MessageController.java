@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/messages")
 @RequiredArgsConstructor
@@ -28,11 +28,12 @@ public class MessageController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMessageById(@PathVariable Long id){
         messageService.deleteMessageById(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
     @PutMapping("/{id}")
     public ResponseEntity<MessageDto> updateMessage(@PathVariable Long id, @RequestBody MessageDto messageDto){
-        return ResponseEntity.ok(messageService.saveMessage(messageDto));
+        return ResponseEntity.ok(messageService.updateMessage(id,messageDto));
     }
+
 
 }
